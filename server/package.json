@@ -1,0 +1,10 @@
+{
+  "name": "hookster-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node src/index.js", "test": "node --test test/server.test.js test/pipeline.test.js" },
+  "dependencies": { "express": "^4.21.0" }
+}
