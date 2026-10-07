@@ -3,7 +3,7 @@
   "build": {
     "apk": {
       "android": { "buildType": "apk" },
-      "env": { "EXPO_PUBLIC_API_BASE": "https://YOUR-SERVER.onrender.com" }
+      "env": { "EXPO_PUBLIC_API_BASE": "https://hookster-server.onrender.com" }
     }
   }
 }

@@ -17,6 +17,6 @@
       },
       "predictiveBackGestureEnabled": false
     },
-    "extra": { "apiBase": "https://YOUR-SERVER.onrender.com" }
+    "extra": { "apiBase": "https://hookster-server.onrender.com" }
   }
 }
