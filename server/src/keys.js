@@ -11,7 +11,7 @@ export function parseKeyFiles(files) {
   const out = { gemini: [], claude: [], youtube: "" };
   for (const f of files) {
     const lines = String(f.text || "").split(/\r?\n/).map((l) => l.trim().replace(/^[\w .-]*[=:]\s*/, "").replace(/^["']|["']$/g, "").trim()).filter((l) => l && !l.startsWith("#"));
-    if (/youtube/i.test(f.name)) { if (lines[0]) out.youtube = lines[0]; continue; }
+    if (/youtube/i.test(f.name)) { const k = lines.find((l) => /^\S{20,}$/.test(l)); if (k) out.youtube = k; continue; }
     for (const l of lines) {
       if (/\s/.test(l) || l.length < 20) continue;
       (l.startsWith("sk-ant-") ? out.claude : out.gemini).push(l);
