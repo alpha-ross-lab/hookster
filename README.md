@@ -47,6 +47,13 @@ npx eas-cli build -p android --profile apk      # cloud build, free tier; downlo
 Local alternative (Android Studio + SDK): `EXPO_PUBLIC_API_BASE=https://... npx expo prebuild -p android && cd android && ./gradlew assembleRelease`.
 Install the APK on an Android phone that has Phantom or Solflare **set to Devnet**; get test SOL at faucet.solana.com.
 
+## Payments: SOL now, SKR planned
+The current build accepts **SOL on devnet** (test mode), because devnet has no SKR token to test with. The release version will additionally accept **SKR** (SPL token) for credit packs: same flow, a token transfer instead of a SOL transfer, verified on-chain by the server the same way.
+
+**Verified end to end:** connect with Mobile Wallet Adapter (`authorize`), pay with `signAndSendTransactions`, the server checks the transfer with `getTransaction` and credits the hooks. Tested on a Solana Seeker phone with its built-in wallet on devnet (see the demo video); also confirmed with Solflare. Known limitation: Phantom in Testnet mode did not complete the sign step over MWA in our tests, so use the Seeker wallet or Solflare for the devnet demo.
+
+**Where to read the code:** wallet and payment flow in `app/src/wallet.ts`, payment check in `server/src/solana.js` (`verifyPayment`), tests with `cd server && npm test`.
+
 ## Security notes
 Secrets live only on the server. Wallet is used for identification and payments only (no signature-based login in this MVP:
 the `x-wallet` header identifies the account; a production version would sign a challenge with `signMessages`).
