@@ -1,3 +1,4 @@
+// ПРОЕКТ: Hookster (хакатон Solana) — app/App.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator, Alert, Image, Linking, Modal, Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, View,
@@ -20,6 +21,15 @@ function Btn({ label, onPress, disabled, kind }: { label: string; onPress: () =>
     </Pressable>
   );
 }
+
+// Only open real YouTube links (the URL comes from the server, so never trust it blindly).
+const openSafe = (url: string) => {
+  try {
+    const u = new URL(url);
+    const ok = u.protocol === 'https:' && /^(www\.|m\.)?(youtube\.com|youtu\.be)$/.test(u.hostname);
+    if (ok) Linking.openURL(u.toString());
+  } catch { /* ignore invalid URLs */ }
+};
 
 export default function App() {
   const [cfg, setCfg] = useState<api.Cfg | null>(null);
@@ -102,7 +112,7 @@ export default function App() {
     if (!cfg) return;
     try {
       setBusy(t.paying);
-      const sig = await payTreasury({ cluster: cfg.cluster, rpc: cfg.rpc, from: addr, to: cfg.treasury, lamports: p.lamports });
+      const sig = await payTreasury({ cluster: cfg.cluster, rpc: cfg.rpc, from: addr, to: cfg.treasury, lamports: p.lamports, onStep: setBusy });
       setPendingSig({ pack: p.id, sig });
       await verify(p.id, sig);
     } catch (e) { fail(e); setBusy(''); }
@@ -175,7 +185,7 @@ export default function App() {
             <Text style={s.muted}>{v.channel} · {fmt(v.views)} {t.views} · {v.seconds}s</Text>
             <View style={{ height: 8 }} />
             <Btn label={`${t.analyze} · ${cfg?.cost.analyze ?? ''}`} onPress={() => openVideo(v)} disabled={!!busy} />
-            <Pressable onPress={() => Linking.openURL(v.url)}><Text style={[s.link, { marginTop: 8 }]}>{t.open}</Text></Pressable>
+            <Pressable onPress={() => openSafe(v.url)}><Text style={[s.link, { marginTop: 8 }]}>{t.open}</Text></Pressable>
           </View>
         ))}
         {items.length > 0 ? <Btn kind="ghost" label={`${t.more} · ${cfg?.cost.searchMore ?? ''}`} onPress={() => doSearch(true)} disabled={!!busy} /> : null}
