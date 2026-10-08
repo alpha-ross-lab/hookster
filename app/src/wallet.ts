@@ -24,6 +24,14 @@ function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
   });
 }
 
+// The web3js wrapper already returns base58 signatures; accept raw base64 too, just in case.
+function toBase58Signature(s: string): string {
+  try { if (bs58.decode(s).length === 64) return s; } catch { /* not base58 */ }
+  const raw = Buffer.from(s, 'base64');
+  if (raw.length === 64) return bs58.encode(raw);
+  throw new Error('Unexpected signature format from the wallet.');
+}
+
 function friendly(e: any): Error {
   const m = String(e?.message ?? e);
   if (/cancel|declin|reject|denied/i.test(m)) {
@@ -64,7 +72,7 @@ export async function payTreasury(p: { cluster: string; rpc: string; from: strin
       const sigs = await w.signAndSendTransactions({ transactions: [tx] });
       return sigs[0];
     });
-    sig = bs58.encode(Buffer.from(sigBytes as string, 'base64'));
+    sig = toBase58Signature(sigBytes as unknown as string);
   } catch (e1: any) {
     if (/cancel|declin|reject|denied/i.test(String(e1?.message ?? e1))) throw friendly(e1);
     // Fallback: the wallet only signs, the app sends the signed transaction.
