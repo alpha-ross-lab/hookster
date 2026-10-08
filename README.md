@@ -57,3 +57,9 @@ The current build accepts **SOL on devnet** (test mode), because devnet has no S
 ## Security notes
 Secrets live only on the server. Wallet is used for identification and payments only (no signature-based login in this MVP:
 the `x-wallet` header identifies the account; a production version would sign a challenge with `signMessages`).
+
+**Known findings from the hackathon security audit (and what we did):**
+- Opening links: the app now opens only `https://` YouTube links received from the server (`openSafe` in `app/App.tsx`).
+- Cleartext endpoint: removed the `http://` development fallback; the default server URL is HTTPS.
+- Dependencies: the remaining advisories are transitive build-time packages of Expo tooling and `@solana/web3.js` v1 (via `jayson`/`uuid`); they are not shipped as app logic. Plan: move to the newer Solana client library and update Expo after the hackathon.
+- Authentication: accounts are identified by wallet address, not by a signed message yet (roadmap: `signMessages` challenge).
