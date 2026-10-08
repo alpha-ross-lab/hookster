@@ -1,7 +1,8 @@
-// Промпты. Язык ответа = язык описания ниши пользователя.
+// ПРОЕКТ: Hookster (хакатон Solana) — server/src/prompts.js
+// Промпты. Язык ответа: английский по умолчанию, другой — только если ниша написана на нём.
 import { ask, parseJson } from "./gemini.js";
 
-const LANG = "Write in the same language as the user's niche description (Russian description -> Russian answer, English -> English).";
+const LANG = "OUTPUT LANGUAGE: English by default. Use another language ONLY if the user's niche description itself is clearly written in that language. Never choose the language from the source video's title, description or channel, and never from the app or phone locale.";
 const SAFE = "Family-friendly only: no medical or health promises, no politics, no violence, no adult content, no fake statistics, no real private people.";
 
 async function jsonCall(system, user, check, maxTokens, fetchFn) {
