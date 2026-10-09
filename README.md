@@ -54,6 +54,22 @@ The current build accepts **SOL on devnet** (test mode), because devnet has no S
 
 **Where to read the code:** wallet and payment flow in `app/src/wallet.ts`, payment check in `server/src/solana.js` (`verifyPayment`), tests with `cd server && npm test`.
 
+## Mobile Wallet Adapter flow (what the code does)
+1. `connectWallet()` in `app/src/wallet.ts` calls `transact` + `authorize({identity, chain})`; the wallet address becomes the account.
+2. `payTreasury()` checks the balance first (clear error if SOL is missing), builds a SystemProgram transfer to the treasury, then calls `signAndSendTransactions()`. If the wallet only signs, it falls back to `signTransactions()` and sends the transaction itself.
+3. Failure handling: a cancelled payment shows "Payment was cancelled in the wallet"; network calls time out after 15 s with a named step; a wrong wallet account is rejected.
+4. `verifyPayment()` in `server/src/solana.js` calls `getTransaction`, checks sender, treasury and amount, and only then credits the hooks (each signature can be used once).
+
+## Sample output (real run from the demo video)
+Niche: "Yoga studio". Source Short: "Try this steps for back bend" by The Flax Monk, 26.9M views, 26 s, 387x channel size.
+
+**Hook:** the video immediately presents a striking visual challenge and promises a quick, actionable solution for a difficult yoga pose.
+**Format:** tutorial demonstration.
+**Structure:** 1 The Problem (a rigid posture when attempting a backbend), 2 The Promise (a breakthrough technique), 3 Step One (preparatory movement), 4 Progression (deeper phase of the stretch), 5 Final Result (the completed backbend as a payoff).
+**Why it went viral:** high visual appeal for a universal goal (flexibility); a 26-second length that encourages looping; views of about 400x the channel size; a broad audience from beginners to intermediate; a wordless demonstration that works in any language.
+
+Hookster then turns this structure into new video ideas and a timed script for the creator's own studio, instead of generating generic text from nothing.
+
 ## Security notes
 Secrets live only on the server. Wallet is used for identification and payments only (no signature-based login in this MVP:
 the `x-wallet` header identifies the account; a production version would sign a challenge with `signMessages`).
