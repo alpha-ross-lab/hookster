@@ -70,6 +70,28 @@ Niche: "Yoga studio". Source Short: "Try this steps for back bend" by The Flax M
 
 Hookster then turns this structure into new video ideas and a timed script for the creator's own studio, instead of generating generic text from nothing.
 
+### Second breakdown sample (niche "beat maker")
+Source Short: "FL 2006 beat" by Ara5Love music, 9.0M views, 57 s, 222.1x channel size.
+
+**Hook:** the video immediately capitalizes on intense nostalgia by showing an ancient version of FL Studio combined with a modern "speedrun" challenge. This unusual pairing instantly grabs the viewer's curiosity within the first few seconds.
+**Format:** nostalgic beat-making speedrun.
+**Structure:** 1 Nostalgic Setup (launching an extremely outdated FL Studio from 2006), 2 The Challenge (a speedrun timer sets the rule: a full beat under extreme software limitations), 3 Rapid Workflow (fast clicking and MIDI placement), 4 Retro Sound Design (classic 2000s stock plugins and sounds layered quickly), 5 Final Reveal (the finished beat plays back, proving that skill matters more than the newest plugins).
+**Why it went viral:** extreme software nostalgia, which naturally triggers comments and shares.
+
+## Results across other niches (real runs on the Seeker phone)
+The same search was run for three more, very different niche descriptions ("solana seeker", "web developer", "beat maker"). Each run costs 30 hooks, and every card shows how many times the Short beat its own channel size.
+
+| Niche typed in the app | Source Short (channel, views, length) | Channel-size multiple |
+|---|---|---|
+| "solana seeker" | "PSG1 - Solana Gaming Gear Unboxing" (Niqz, 2K views, 32 s) | 3.5x |
+| "solana seeker" | "Solana Seeker Phone unbox" (Solana Mania, 2K views, 51 s) | 3.2x |
+| "web developer" | "Manager / programmers life / chatgpt" (Comp Tech Edu, 672K views, 18 s) | 74.2x |
+| "web developer" | "Vida de programador" (olDie_animation, 28K views, 15 s) | 55.3x |
+| "beat maker" | "FL 2006 beat" (Ara5Love music, 9.0M views, 57 s) | 222.1x |
+| "beat maker" | "BEAT MEME REMIX" (WORST pLAYEr, 18.0M views, 15 s) | 65.7x |
+
+A small niche ("solana seeker") gives modest multiples (about 3x), larger niches ("web developer", "beat maker") give tens to hundreds. The score is relative to the channel's own size, not raw views, so a 2K-view Short from a tiny channel can qualify. Each result can be opened with "Break down" (10 hooks) to get the hook, format and structure, as in the sample above.
+
 ## Security notes
 Secrets live only on the server. Wallet is used for identification and payments only (no signature-based login in this MVP:
 the `x-wallet` header identifies the account; a production version would sign a challenge with `signMessages`).
